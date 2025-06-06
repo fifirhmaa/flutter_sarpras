@@ -3,8 +3,8 @@ class UserModel {
   final String name;
   final String email;
   final dynamic emailVerifiedAt;
-  final String position;
-  final String dataClass;
+  final String? position;
+  final String? dataClass;
   final String role;
   final DateTime createdAt;
   final DateTime updatedAt;
@@ -27,8 +27,8 @@ class UserModel {
       name: json['name'],
       email: json['email'],
       emailVerifiedAt: json['email_verified_at'],
-      position: json['position'],
-      dataClass: json['class'], // sesuaikan nama field di JSON
+      position: json['position'] ?? '',
+      dataClass: json['class'] ?? '',
       role: json['role'],
       createdAt: DateTime.parse(json['created_at']),
       updatedAt: DateTime.parse(json['updated_at']),

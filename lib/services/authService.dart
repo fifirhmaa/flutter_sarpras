@@ -16,10 +16,19 @@ class Authservice {
       final accessToken = json['access_token'];
       final userData = json['data'];
 
+      print('Login response: ${response.body}');
+
       await StorageToken.saveToken(accessToken);
+
+      print("user data: ${userData}");
       await StorageToken.saveUser(userData);
     } else {
       throw Exception('Login failed');
     }
+  }
+
+  Future<void> logout() async {
+    await StorageToken.deleteToken();
+    await StorageToken.deleteUser();
   }
 }

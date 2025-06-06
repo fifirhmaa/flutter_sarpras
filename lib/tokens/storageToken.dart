@@ -13,6 +13,11 @@ class StorageToken {
     return prefs.getString('token');
   }
 
+  static Future<void> deleteToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('token');
+  }
+
   static Future<String?> getId() async {
     String? token = await StorageToken.getToken();
     if (token != null) {
@@ -24,6 +29,7 @@ class StorageToken {
 
   static Future<void> saveUser(Map<String, dynamic> userData) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("user data: ${jsonEncode(userData)}");
     await prefs.setString('user', jsonEncode(userData));
   }
 
@@ -40,6 +46,11 @@ class StorageToken {
       }
     }
     return null;
+  }
+
+  static Future<void> deleteUser() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('user');
   }
 
   // static Future<void> removeToken() async {

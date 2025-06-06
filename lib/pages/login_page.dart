@@ -25,11 +25,11 @@ class _LoginPageState extends State<LoginPage> {
 
     setState(() => _isLoading = true);
     try {
-      final data = await _authService.login(
+      await _authService.login(
         _emailController.text.trim(),
         _passwordController.text.trim(),
       );
-      FocusScope.of(context).unfocus();
+      // FocusScope.of(context).unfocus();
       Navigator.pushReplacementNamed(context, '/home');
     } catch (e) {
       print('Login failed: $e');

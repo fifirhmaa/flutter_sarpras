@@ -7,6 +7,8 @@ import 'package:ass_sisforas/services/borrowService.dart';
 import 'package:ass_sisforas/services/returnService.dart';
 import 'package:flutter/material.dart';
 import 'package:ass_sisforas/services/userService.dart';
+import 'package:ass_sisforas/services/authService.dart';
+import 'package:ass_sisforas/pages/login_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -73,7 +75,7 @@ class _HomePageState extends State<HomePage> {
   Future<void> loadUserName() async {
     final userModel = await UserService().getUser();
     setState(() {
-      userName = userModel.name;
+      userName = userModel.name!;
     });
   }
 
@@ -122,7 +124,13 @@ class _HomePageState extends State<HomePage> {
         actions: [
           IconButton(
             icon: Icon(Icons.logout),
-            onPressed: () {},
+            onPressed: () async {
+              await Authservice().logout();
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => LoginPage()),
+              );
+            },
           ),
         ],
       ),
@@ -139,8 +147,8 @@ class _HomePageState extends State<HomePage> {
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
                         children: [
-                          buildCountBox('Total Barang', itemCount),
-                          buildCountBox('Dipinjam', borrowCount),
+                          buildCountBox('Total Barang', itemCount ?? 0),
+                          buildCountBox('Dipinjam', borrowCount ?? 0),
                         ],
                       ),
                     ),
@@ -148,8 +156,8 @@ class _HomePageState extends State<HomePage> {
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
                         children: [
-                          buildCountBox('Dikembalikan', returnCount),
-                          buildCountBox('Terlambat', fineCount),
+                          buildCountBox('Dikembalikan', returnCount ?? 0),
+                          buildCountBox('Terlambat', fineCount ?? 0),
                         ],
                       ),
                     ),

@@ -24,15 +24,23 @@ class _LoginPageState extends State<LoginPage> {
     if (!_formKey.currentState!.validate()) return;
 
     setState(() => _isLoading = true);
+
     try {
-      await _authService.login(
+      final user = await _authService.login(
         _emailController.text.trim(),
         _passwordController.text.trim(),
       );
-      // FocusScope.of(context).unfocus();
+
+      print('User logged in: ${user.name}');
+
       Navigator.pushReplacementNamed(context, '/home');
     } catch (e) {
-      print('Login failed: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Login failed: ${e.toString()}'),
+          backgroundColor: Colors.red,
+        ),
+      );
     } finally {
       setState(() => _isLoading = false);
     }
